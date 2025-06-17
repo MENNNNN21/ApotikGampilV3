@@ -1,4 +1,5 @@
 <?php
+// File: bootstrap/app.php
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -11,10 +12,22 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        ]);
+
+        // --- TAMBAHKAN KODE INI ---
+        $middleware->redirectGuestsTo(function ($request) {
+            // Jika URL yang diminta adalah untuk area admin...
+            if ($request->is('admin') || $request->is('admin/*')) {
+                // ...maka arahkan ke login admin.
+                return route('admin.login');
+            }
+
+            // Jika tidak, arahkan ke login user biasa.
+            return route('login');
+        });
+        // --- AKHIR KODE TAMBAHAN ---
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+// --- TAMBAHKAN KODE INI ---

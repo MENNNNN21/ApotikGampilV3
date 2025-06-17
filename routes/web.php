@@ -13,20 +13,29 @@ use App\Http\Controllers\KonsultasiController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PurchaseController;
+use Illuminate\Support\Facades\Auth;
 
+
+Auth::routes();
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 // Services Routes
 Route::get('/services', [ServiceController::class, 'index'])->name('services'); // Perbaikan nama route
 Route::get('/services/whatsapp/{id}', [ServiceController::class, 'redirectToWhatsApp'])->name('services.whatsapp');
-Route::get('/products', [ProductController::class, 'index'])->name('products');
-Route::get('/products/category/{slug}', [ProductController::class, 'category'])->name('products.category');
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
 Route::get('/articles', [ArtikelController::class, 'index'])->name('articles');
 Route::get('/articles/{slug}', [ArtikelController::class, 'show'])->name('articles.show');
 Route::get('/consultation', [KonsultasiController::class, 'index'])->name('consultation.index');
 Route::post('/consultation', [KonsultasiController::class, 'submit'])->name('consultation.submit');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/products', [ProductController::class, 'index'])->name('products');
+Route::get('/products/category/{slug}', [ProductController::class, 'category'])->name('products.category');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+});
+
 
 
 
