@@ -29,7 +29,8 @@ class Obat extends Model
         'dosis',
         'efek_samping',
         'harga',
-        'stok',
+        'stock',
+        'weight',
         'image',
         'is_active'
     ];

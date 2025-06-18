@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') - Apotik Gampil</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -54,7 +55,6 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            
         }
         
         .navbar-nav .nav-link::before {
@@ -85,6 +85,74 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
         
+        /* Profile Dropdown Styles */
+        .profile-dropdown {
+            position: relative;
+        }
+        
+        .profile-toggle {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(192, 15, 15, 0.2);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: #c00f0f !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .profile-toggle:hover {
+            background: rgba(192, 15, 15, 0.1);
+            border-color: rgba(192, 15, 15, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(192, 15, 15, 0.2);
+            color: #c00f0f !important;
+        }
+        
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c00f0f, #ff4757);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .dropdown-item {
+            padding: 0.7rem 1.5rem;
+            transition: all 0.3s ease;
+            color: #333;
+            border-radius: 0;
+        }
+        
+        .dropdown-item:hover {
+            background: rgba(192, 15, 15, 0.1);
+            color: #c00f0f;
+            transform: translateX(5px);
+        }
+        
+        .dropdown-divider {
+            margin: 0.5rem 0;
+            border-color: rgba(0,0,0,0.1);
+        }
+        
         .navbar-toggler {
             border: 2px solid rgba(255,255,255,0.3);
             border-radius: 8px;
@@ -97,23 +165,33 @@
             background: rgba(255,255,255,0.1);
         }
         
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-        }
+       
         
         /* Mobile responsive */
         @media (max-width: 991.98px) {
             .navbar-collapse {
                 margin-top: 1rem;
-                background: rgba(255,255,255,0.1);
+                background: rgba(255, 255, 255, 0.1);
                 border-radius: 15px;
                 padding: 1rem;
                 backdrop-filter: blur(10px);
+                
             }
             
             .navbar-nav .nav-link {
                 margin: 0.2rem 0;
                 text-align: center;
+            }
+            
+            .profile-dropdown {
+                margin-top: 1rem;
+                text-align: center;
+            }
+            
+            .profile-toggle {
+                justify-content: center;
+                width: fit-content;
+                margin: 0 auto;
             }
         }
         
@@ -147,6 +225,22 @@
         .nav-item:hover::after {
             width: 80%;
         }
+        
+        /* User welcome text animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .user-welcome {
+            animation: fadeInUp 0.5s ease-out;
+        }
     </style>
 </head>
 <body>
@@ -155,11 +249,11 @@
             <a class="navbar-brand" href="{{ route('home') }}">
                 <span>Apotik Gampil</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">
                             <i class="fas fa-home me-1"></i>Profil
@@ -191,6 +285,52 @@
                         </a>
                     </li>
                 </ul>
+                
+                <!-- Profile Section -->
+                <div class="navbar-nav">
+                    @auth
+                        <div class="nav-item dropdown profile-dropdown">
+                            <a class="profile-toggle dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="profile-avatar">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </div>
+                                <span class="user-welcome">{{ Auth::user()->name }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile.show') }}">
+                                        <i class="fas fa-user me-2"></i>Profil Saya
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                        <i class="fas fa-cog me-2"></i>Edit Profil
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <div class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">
+                                <i class="fas fa-sign-in-alt me-1"></i>Login
+                            </a>
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">
+                                <i class="fas fa-user-plus me-1"></i>Register
+                            </a>
+                        </div>
+                    @endauth
+                </div>
             </div>
         </div>
     </nav>
@@ -217,7 +357,7 @@
                 <div class="col-md-4">
                     <h5>Kontak</h5>
                     <ul class="list-unstyled">
-                        <li><i class="fas fa-phone"></i> +62 xxx-xxxx-xxxx</li>
+                        <li><i class="fas fa-phone"></i> +62 822-6138-5228</li>
                         <li><i class="fas fa-envelope"></i> info@apotikgampil.com</li>
                     </ul>
                 </div>
@@ -234,6 +374,19 @@
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.profile-dropdown');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            
+            if (dropdown && !dropdown.contains(event.target)) {
+                const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+                if (dropdownToggle && dropdownToggle.getAttribute('aria-expanded') === 'true') {
+                    dropdownToggle.click();
+                }
             }
         });
     </script>

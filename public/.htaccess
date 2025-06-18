@@ -3,6 +3,10 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    # Izinkan akses langsung ke /storage
+    RewriteCond %{REQUEST_URI} ^/storage/
+    RewriteRule ^storage/(.*)$ storage/$1 [L,NC]
+
     RewriteEngine On
 
     # Handle Authorization Header

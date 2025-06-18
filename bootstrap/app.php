@@ -11,22 +11,20 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
+   ->withMiddleware(function (Middleware $middleware) {
+    // DAFTARKAN ALIAS DI SINI
+    $middleware->alias([
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+    ]);
 
-        // --- TAMBAHKAN KODE INI ---
-        $middleware->redirectGuestsTo(function ($request) {
-            // Jika URL yang diminta adalah untuk area admin...
-            if ($request->is('admin') || $request->is('admin/*')) {
-                // ...maka arahkan ke login admin.
-                return route('admin.login');
-            }
-
-            // Jika tidak, arahkan ke login user biasa.
-            return route('login');
-        });
-        // --- AKHIR KODE TAMBAHAN ---
-
-    })
+    // Konfigurasi redirect yang sudah kita buat sebelumnya biarkan saja
+    $middleware->redirectGuestsTo(function ($request) {
+        if ($request->is('admin') || $request->is('admin/*')) {
+            return route('admin.login');
+        }
+        return route('login');
+    });
+})
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

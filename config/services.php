@@ -34,6 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'biteship' => [
+    'key' => env('BITESHIP_API_KEY'),
+    'url' => env('BITESHIP_API_URL', 'https://api.biteship.com/v1'),
+],
 
     
 

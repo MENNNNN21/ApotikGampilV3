@@ -83,6 +83,8 @@ class ProductController extends Controller
             'category_id' => 'required|exists:obat_kategori,id',
             'deskripsi' => 'required|string',
             'dosis' => 'required|string',
+            'weight' => 'nullable|numeric|min:0',
+            'stock' => 'nullable|integer|min:0',    
             'efek_samping' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);

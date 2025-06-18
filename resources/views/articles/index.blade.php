@@ -1,4 +1,4 @@
-@extends('/admin/layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Artikel')
 
@@ -21,7 +21,7 @@
                 
                 <!-- Image Container -->
                 <div class="position-relative overflow-hidden" style="height: 200px;">
-                    <img src="{{ asset('storage/' . $article->image) }}" 
+                    <img src="{{ asset('storage/' . $article->avatar) }}" 
                          class="card-img-top w-100 h-100 object-fit-cover transition-transform" 
                          alt="{{ $article->title }}"
                          style="transition: transform 0.3s ease;">

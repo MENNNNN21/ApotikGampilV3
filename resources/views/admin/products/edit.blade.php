@@ -52,6 +52,23 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="weight">Berat (gram) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control @error('weight') is-invalid @enderror" 
+                               id="weight" name="weight" value="{{ old('weight', $product->weight) }}" required>
+                        @error('weight')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="stock">Stok <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control @error('stock') is-invalid 
+                        @enderror" 
+                               id="stock" name="stock" value="{{ old('stock', $product->stock) }}" required>
+                        @error('stock')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                     <div class="col-md-6">
                         <div class="form-group">

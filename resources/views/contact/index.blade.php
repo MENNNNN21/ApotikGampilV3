@@ -5,7 +5,14 @@
 @section('content')
 <div class="contact-hero py-5 mb-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative; overflow: hidden;">
     <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10">
-        <div style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><circle cx=\"20\" cy=\"20\" r=\"2\" fill=\"white\"/><circle cx=\"80\" cy=\"20\" r=\"2\" fill=\"white\"/><circle cx=\"50\" cy=\"80\" r=\"2\" fill=\"white\"/></svg>'); background-size: 50px 50px;"></div>
+       <div style="
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'20\' cy=\'20\' r=\'2\' fill=\'white\'/><circle cx=\'80\' cy=\'20\' r=\'2\' fill=\'white\'/><circle cx=\'50\' cy=\'80\' r=\'2\' fill=\'white\'/></svg>');
+    background-size: 50px 50px;
+    width: 100%;
+    height: 200px;
+">
+</div>
+
     </div>
     <div class="container text-center text-white position-relative">
         <h1 class="display-4 fw-bold mb-3">Hubungi Kami</h1>
@@ -37,9 +44,10 @@
                         </div>
                         <h5 class="fw-bold text-dark mb-2">Alamat Kami</h5>
                         <p class="text-muted mb-0 lh-base">
-                            Jl. Contoh No. 123<br>
-                            Kota, Provinsi, 12345<br>
-                            Indonesia
+                            Jl. Sadang Tengah IV No.3, Sekeloa<br>
+                            Kecamatan Coblong<br>
+                            Kota Bandung, Jawa Barat 
+                            40134
                         </p>
                         <div class="position-absolute top-0 end-0 opacity-5">
                             <i class="fas fa-map-marker-alt" style="font-size: 4rem; color: var(--bs-primary);"></i>
@@ -54,10 +62,7 @@
                         <h5 class="fw-bold text-dark mb-2">Telepon</h5>
                         <div class="d-flex flex-column gap-2">
                             <a href="tel:+6281234567890" class="text-decoration-none text-muted hover-primary">
-                                <i class="fas fa-phone-alt me-2"></i>+62 812-3456-7890
-                            </a>
-                            <a href="tel:+6282134567890" class="text-decoration-none text-muted hover-primary">
-                                <i class="fas fa-mobile-alt me-2"></i>+62 821-3456-7890
+                                <i class="fas fa-phone-alt me-2"></i>+62 822-6138-5228
                             </a>
                         </div>
                         <div class="position-absolute top-0 end-0 opacity-5">
@@ -110,7 +115,7 @@
                 <div class="quick-contact mt-4">
                     <h5 class="fw-bold text-dark mb-3">Kontak Cepat</h5>
                     <div class="d-flex gap-3 flex-wrap">
-                        <a href="https://wa.me/6281234567890" class="btn btn-success btn-lg rounded-pill px-4 py-2 d-flex align-items-center gap-2 flex-fill justify-content-center">
+                        <a href="https://wa.me/6282261385228" class="btn btn-success btn-lg rounded-pill px-4 py-2 d-flex align-items-center gap-2 flex-fill justify-content-center">
                             <i class="fab fa-whatsapp"></i>
                             <span>WhatsApp</span>
                         </a>

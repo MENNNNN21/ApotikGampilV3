@@ -36,6 +36,8 @@
                             <th>Kategori</th>
                             <th>Deskripsi</th>
                             <th>Dosis</th>
+                            <th>berat</th>
+                            <th>Stock</th>
                             <th>Efek Samping</th>
                             <th>Gambar</th>
                             
@@ -51,6 +53,8 @@
                             <td>{{ $product->kategori->name ?? 'Kategori tidak ditemukan' }}</td>
                             <td>{{ Str::limit($product->deskripsi, 50) }}</td>
                             <td>{{ Str::limit($product->dosis, 50) }}</td>
+                            <td>{{ $product->weight ? $product->weight . ' gram' : 'Tidak ada' }}</td>
+                            <td>{{ $product->stock ?? 'Tidak ada' }}</td>
                             <td>{{ Str::limit($product->efek_samping, 50) }}</td>
                             
                             <td>

@@ -15,6 +15,9 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShippingController;
 
 
 Auth::routes();
@@ -35,6 +38,19 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/products/category/{slug}', [ProductController::class, 'category'])->name('products.category');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 });
+
+// Cart Routes
+
+
+// Profile Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
+});
+
+
 
 
 
